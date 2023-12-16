@@ -1,0 +1,129 @@
+[gd_scene load_steps=15 format=3 uid="uid://6ynj3axcp0kr"]
+
+[ext_resource type="Script" path="res://NPC.gd" id="1_3s62a"]
+[ext_resource type="Script" path="res://Text.gd" id="2_3ny5o"]
+[ext_resource type="Script" path="res://conversation.gd" id="2_iaas3"]
+[ext_resource type="Script" path="res://textbox.gd" id="3_3ucqy"]
+[ext_resource type="Texture2D" uid="uid://o7p8od7q1pj" path="res://sprites/lampshade1.png" id="3_4iprr"]
+[ext_resource type="Texture2D" uid="uid://vdydg7is8bea" path="res://sprites/lampshade2.png" id="4_wm4f2"]
+[ext_resource type="Texture2D" uid="uid://c7njaaq4hoe2n" path="res://sprites/lampshade3.png" id="5_xebja"]
+[ext_resource type="Script" path="res://AnimatedSprite3D.gd" id="6_33icm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3tbg4"]
+size = Vector3(0, 0, 0)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_436sg"]
+radius = 0.341631
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rq5eh"]
+transparency = 1
+shading_mode = 2
+albedo_texture = ExtResource("3_4iprr")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4mmg5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yf1po"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_4iprr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wm4f2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xebja")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vvcni"]
+size = Vector3(0.359094, 2.04286, 0.619678)
+
+[node name="NPC" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000757456, 1.16266, 2.30441)
+script = ExtResource("1_3s62a")
+
+[node name="conversation" type="Node3D" parent="."]
+script = ExtResource("2_iaas3")
+
+[node name="textbox" type="Node3D" parent="conversation"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0.571553, -0.338043)
+script = ExtResource("2_3ny5o")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="conversation/textbox"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_3ucqy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="conversation/textbox/StaticBody3D"]
+shape = SubResource("BoxShape3D_3tbg4")
+
+[node name="option 1" type="Node3D" parent="conversation"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0.35, -0.338)
+script = ExtResource("2_3ny5o")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="conversation/option 1"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_3ucqy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="conversation/option 1/StaticBody3D"]
+shape = SubResource("BoxShape3D_3tbg4")
+
+[node name="option 2" type="Node3D" parent="conversation"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0.15, -0.338)
+script = ExtResource("2_3ny5o")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="conversation/option 2"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_3ucqy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="conversation/option 2/StaticBody3D"]
+shape = SubResource("BoxShape3D_3tbg4")
+
+[node name="option 3" type="Node3D" parent="conversation"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -0.05, -0.338)
+script = ExtResource("2_3ny5o")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="conversation/option 3"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_3ucqy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="conversation/option 3/StaticBody3D"]
+shape = SubResource("BoxShape3D_3tbg4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("CapsuleShape3D_436sg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-0.355793, -8.74228e-08, 4.21871e-15, 0, -4.37114e-08, -1.10398, 3.11044e-08, -1, 4.82565e-08, 0, 0.030993, 0)
+material_override = SubResource("StandardMaterial3D_rq5eh")
+mesh = SubResource("PlaneMesh_4mmg5")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+visible = false
+pixel_size = 0.005
+shaded = true
+sprite_frames = SubResource("SpriteFrames_yf1po")
+frame = 2
+frame_progress = 0.506218
+script = ExtResource("6_33icm")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.524383)
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0219874, 0.0210084, -0.371717)
+shape = SubResource("BoxShape3D_vvcni")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

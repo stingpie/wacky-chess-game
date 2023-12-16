@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=3 uid="uid://fml75lbpblkk"]
+
+[ext_resource type="PackedScene" uid="uid://bwyl7p71rjk5b" path="res://chess.tscn" id="1_a4jra"]
+[ext_resource type="Texture2D" uid="uid://bbsx3e58t75ik" path="res://non-tile-marble.jpg" id="1_jg8ip"]
+[ext_resource type="Script" path="res://chess.gd" id="2_l4pw0"]
+[ext_resource type="PackedScene" uid="uid://6ynj3axcp0kr" path="res://npc.tscn" id="3_1gadf"]
+[ext_resource type="PackedScene" uid="uid://dgpjxoygnvyy4" path="res://assets/simple_fpsplayer/Player.tscn" id="3_kxqbp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8wo8y"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccao6"]
+albedo_texture = ExtResource("1_jg8ip")
+metallic_specular = 0.0
+roughness = 0.0
+rim_tint = 0.0
+clearcoat_roughness = 1.0
+subsurf_scatter_strength = 0.94
+backlight = Color(0, 0.619608, 0, 1)
+point_size = 128.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6b3qs"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("StandardMaterial3D_ccao6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_boaek"]
+size = Vector3(1.0032, 0.211355, 0.99746)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xahso"]
+size = Vector3(0.45021, 0.538435, 0.465396)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="chess" parent="." instance=ExtResource("1_a4jra")]
+transform = Transform3D(-1.56958e-07, -0.5, -2.18557e-08, 8.47033e-22, -2.18557e-08, 0.5, -0.5, 1.56958e-07, 7.92644e-15, 2.82901, 1.52672, -1.00635)
+script = ExtResource("2_l4pw0")
+
+[node name="Player" parent="." instance=ExtResource("3_kxqbp")]
+transform = Transform3D(-0.99733, 0, 0.0730292, 0, 1, 0, -0.0730292, 0, -0.99733, 0, 1.24054, 0)
+
+[node name="structure" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.949326, -2.357)
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="structure"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.09742, 7.43151)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="structure/StaticBody3D4"]
+shape = SubResource("BoxShape3D_8wo8y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="structure/StaticBody3D4"]
+transform = Transform3D(5.00704, 0, 0, 0, 5.00704, 0, 0, 0, 5.00704, 0, 0.05, 0)
+mesh = SubResource("PlaneMesh_6b3qs")
+skeleton = NodePath("../../StaticBody3D4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="structure"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.949326, 2.357)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="structure/StaticBody3D"]
+shape = SubResource("BoxShape3D_8wo8y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="structure/StaticBody3D"]
+transform = Transform3D(5.00704, 0, 0, 0, 5.00704, 0, 0, 0, 5.00704, 0, 0.05, 0)
+mesh = SubResource("PlaneMesh_6b3qs")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="structure"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.87609, 0, 2.38762)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="structure/StaticBody3D2"]
+shape = SubResource("BoxShape3D_boaek")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="structure/StaticBody3D2/CollisionShape3D"]
+size = Vector3(1, 0.215113, 1)
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="structure"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.80098, -0.628999, 2.38762)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="structure/StaticBody3D3"]
+shape = SubResource("BoxShape3D_xahso")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="structure/StaticBody3D3/CollisionShape3D"]
+size = Vector3(0.446687, 0.538505, 0.463209)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="structure"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.81552, 2.37558)
+shadow_enabled = true
+spot_range = 19.6615
+spot_angle = 45.8972
+
+[node name="NPC" parent="." instance=ExtResource("3_1gadf")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="NPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.833066, -0.0637941)
+light_energy = 0.5
+omni_range = 40.0
+omni_attenuation = 2.00001
