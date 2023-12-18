@@ -6,29 +6,53 @@ extends Node3D
 
 
 
+# Pieces:
+#	WHITE		BLACK		TYPE
+#	0			8			EMPTY
+#	1			9			PAWN
+#	2			10			BISHOP
+#	3			11			ROOK
+#	4			12			KNIGHT
+#	5			13			QUEEN
+#	6			14			KING
+
 
 
 
 var board = get_parent()
 
-enum {EMPTY, WPAWN, WKINGHT, WBISHOP, WQUEEN, WKING, WROOK, BPAWN, BKINGHT, BBISHOP, BQUEEN, BKING, BROOK}
-var piece = EMPTY;
+
+var piece = 0;
 var sprite;
 var highlight;
 var x;
 var y;
 
+var texdict={}
+
 var time_selected=0;
 var timer=1;
+var is_cursor_hover=false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	
+	
 	sprite = get_node("piece");
 	highlight= get_node("highlight");
+	highlight.modulate.a=0.1;
 	pass # Replace with function body.
 
 func set_piece(new_piece):
 	piece = new_piece;
+	
+	highlight.hide();
+	if piece==0 or piece==8:
+		sprite.modulate.a=0;
+	else:
+		sprite.modulate.a=1;
+		sprite.texture=get_parent().piecetex[new_piece];
 	
 
 
@@ -37,18 +61,28 @@ func set_piece(new_piece):
 func _process(delta):
 	timer=max(0,timer - delta*10);
 	if(timer==0):
-		cursor_stop_hover()
+		if(is_cursor_hover):
+			cursor_stop_hover()
+			#print(get_parent().name);
+			#get_parent().unhighlight_piece(self);
+			
 	pass
 	
 func cursor_hover(delta):
+	is_cursor_hover=true;
 	timer=1
 	time_selected = time_selected+delta;
 	rotation.y=sin(time_selected*10)/10;
 	var ts = min(time_selected+1,1.2);
 	
 	scale=Vector3(ts, ts, ts);
-	
+
+
+
+
 func cursor_stop_hover():
+	get_parent().unhighlight_piece(self);
+	is_cursor_hover = false;
 	timer=0;
 	time_selected=0;
 	scale=Vector3(1,1,1);

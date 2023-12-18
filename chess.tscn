@@ -40,6 +40,7 @@ texture = ExtResource("1_qdo1s")
 [node name="highlight" type="Sprite3D" parent="tile"]
 transform = Transform3D(-0.4, 3.49691e-08, 1.52855e-15, 0, -1.74846e-08, 0.4, 3.49691e-08, 0.4, 1.74846e-08, 0, 0.000659591, 0)
 material_override = SubResource("StandardMaterial3D_3vvc8")
+modulate = Color(1, 1, 1, 0.0627451)
 pixel_size = 0.5
 texture = SubResource("PlaceholderTexture2D_ina0x")
 
