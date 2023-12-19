@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://piece.gd" id="1_luspo"]
 [ext_resource type="Texture2D" uid="uid://c4pv45lyp3m24" path="res://sprites/text/K.png" id="1_qdo1s"]
-[ext_resource type="Texture2D" uid="uid://q12qksn20l2l" path="res://chess.png" id="1_rb8gm"]
 [ext_resource type="Script" path="res://piece_hitbox.gd" id="2_cbe3w"]
 [ext_resource type="Script" path="res://board.gd" id="3_ehici"]
+[ext_resource type="Texture2D" uid="uid://csq7bbi3r7th6" path="res://alien-cat.png" id="5_8j6sw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0d17a"]
 size = Vector3(0, 0, 0)
@@ -15,7 +15,7 @@ albedo_color = Color(0.266667, 0.709804, 0.439216, 1)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ina0x"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1gxu"]
-albedo_texture = ExtResource("1_rb8gm")
+albedo_texture = ExtResource("5_8j6sw")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ovaxa"]
 
@@ -35,13 +35,15 @@ shape = SubResource("BoxShape3D_0d17a")
 
 [node name="piece" type="Sprite3D" parent="tile"]
 transform = Transform3D(-0.4, 3.49691e-08, 1.52855e-15, 0, -1.74846e-08, 0.4, 3.49691e-08, 0.4, 1.74846e-08, 0, 0.00154203, 0)
+double_sided = false
 texture = ExtResource("1_qdo1s")
 
 [node name="highlight" type="Sprite3D" parent="tile"]
-transform = Transform3D(-0.4, 3.49691e-08, 1.52855e-15, 0, -1.74846e-08, 0.4, 3.49691e-08, 0.4, 1.74846e-08, 0, 0.000659591, 0)
+transform = Transform3D(-0.5, 7.54979e-08, 3.30012e-15, 0, -2.18557e-08, 0.5, 7.54979e-08, 0.5, 2.18557e-08, 0, 0.000659591, 0)
 material_override = SubResource("StandardMaterial3D_3vvc8")
 modulate = Color(1, 1, 1, 0.0627451)
 pixel_size = 0.5
+double_sided = false
 texture = SubResource("PlaceholderTexture2D_ina0x")
 
 [node name="pieces" type="Node3D" parent="."]
@@ -49,5 +51,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.875, 0, 0.875)
 script = ExtResource("3_ehici")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_p1gxu")
 mesh = SubResource("PlaneMesh_ovaxa")

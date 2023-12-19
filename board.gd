@@ -7,6 +7,7 @@ var mouse_over=false;
 var tiles=[];
 var selected_piece=null;
 var piecetex=[];
+var piece_held=null;
 
 # Pieces:
 #	WHITE		BLACK		TYPE
@@ -72,6 +73,26 @@ func _process(delta):
 		selected_piece.cursor_hover(delta)
 	pass
 
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_E and selected_piece:
+			if(not piece_held):
+				piece_held=selected_piece;
+			else:
+				if(selected_piece.is_highlighted):
+					selected_piece.set_piece(piece_held.piece);
+					piece_held.set_piece(0);
+					piece_held=null;
+					
+					for x in range(8):
+						for y in range(8):
+							tiles[x][y]._unhighlight()
+				elif(selected_piece == piece_held):
+					unhighlight_piece(selected_piece);
+					piece_held=null;
+			
+
+
 func set_pieces(setup):
 	for x in range(8):
 		for y in range(8):
@@ -80,6 +101,8 @@ func set_pieces(setup):
 
 
 func highlight_piece(piece):
+	if(piece_held):
+		return
 	if(piece.piece==1): # W PAWN
 		if(piece.y==6): # if passant is possible
 			highlight_line(piece, 0,-1, 2);
@@ -141,6 +164,9 @@ func highlight_piece(piece):
 
 
 func unhighlight_piece(piece):
+	if(piece_held):
+		return
+	
 	if(piece.piece==1): # W PAWN
 		if(piece.y==6): # if passant is possible
 			unhighlight_line(piece, 0,-1, 2);
@@ -212,6 +238,10 @@ func on_stop_look_at(piece):
 	selected_piece=null;
 	mouse_over = false;
 
+
+
+
+
 func load_textures(char):
 	var image = Image.load_from_file("res://sprites//text//" + char +".png")
 	var texture = ImageTexture.create_from_image(image)
@@ -231,19 +261,19 @@ func highlight_line(piece, dx, dy, length):
 			if(tiles[px+dx*i][py+dy*i].piece>8):
 				return;
 			elif(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece!=0):
-				tiles[px+dx*i][py+dy*i].highlight.show();
+				tiles[px+dx*i][py+dy*i]._highlight();
 				return;
 			else:
-				tiles[px+dx*i][py+dy*i].highlight.show();
+				tiles[px+dx*i][py+dy*i]._highlight();
 				
 		if(type<8):
 			if(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece>0):
 				return;
 			elif(tiles[px+dx*i][py+dy*i].piece>8 && tiles[px+dx*i][py+dy*i].piece!=0):
-				tiles[px+dx*i][py+dy*i].highlight.show();
+				tiles[px+dx*i][py+dy*i]._highlight();
 				return;
 			else:
-				tiles[px+dx*i][py+dy*i].highlight.show();
+				tiles[px+dx*i][py+dy*i]._highlight();
 	pass
 	
 func unhighlight_line(piece, dx, dy, length):
@@ -260,17 +290,17 @@ func unhighlight_line(piece, dx, dy, length):
 			if(tiles[px+dx*i][py+dy*i].piece>8):
 				return;
 			elif(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece!=0):
-				tiles[px+dx*i][py+dy*i].highlight.hide();
+				tiles[px+dx*i][py+dy*i]._unhighlight();
 				return;
 			else:
-				tiles[px+dx*i][py+dy*i].highlight.hide();
+				tiles[px+dx*i][py+dy*i]._unhighlight();
 				
 		if(type<8):
 			if(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece>0):
 				return;
 			elif(tiles[px+dx*i][py+dy*i].piece>8 && tiles[px+dx*i][py+dy*i].piece!=0):
-				tiles[px+dx*i][py+dy*i].highlight.hide();
+				tiles[px+dx*i][py+dy*i]._unhighlight();
 				return;
 			else:
-				tiles[px+dx*i][py+dy*i].highlight.hide();
+				tiles[px+dx*i][py+dy*i]._unhighlight();
 	pass

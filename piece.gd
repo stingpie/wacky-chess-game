@@ -25,6 +25,7 @@ var board = get_parent()
 var piece = 0;
 var sprite;
 var highlight;
+var is_highlighted=false;
 var x;
 var y;
 
@@ -47,7 +48,7 @@ func _ready():
 func set_piece(new_piece):
 	piece = new_piece;
 	
-	highlight.hide();
+	_unhighlight()
 	if piece==0 or piece==8:
 		sprite.modulate.a=0;
 	else:
@@ -77,9 +78,6 @@ func cursor_hover(delta):
 	
 	scale=Vector3(ts, ts, ts);
 
-
-
-
 func cursor_stop_hover():
 	get_parent().unhighlight_piece(self);
 	is_cursor_hover = false;
@@ -87,4 +85,14 @@ func cursor_stop_hover():
 	time_selected=0;
 	scale=Vector3(1,1,1);
 	rotation.y=0;
+
+
+
+func _highlight():
+	highlight.show()
+	is_highlighted=true;
+	
+func _unhighlight():
+	is_highlighted=false;
+	highlight.hide()
 
