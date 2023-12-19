@@ -23,10 +23,13 @@ extends Node3D
 # called after this function to actually play the appearing animation & show the text. 
 
 var mousebox
+var font
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#mousebox = self.get_child(0).get_child(0)
 	mousebox = get_child(0)
+	font = load("res://sprites/text2/ResizedSheet1.png")
+	
 	for i in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
 		load_textures(i)
 	mousebox.get_child(0).shape.size = Vector3(0,0,0)
@@ -168,7 +171,10 @@ func new_line(text):
 		
 		elif(text[i]!=" "):
 			var char3d = Sprite3D.new();
-			char3d.texture =texdict[text[i]]
+			char3d.texture = font #texdict[text[i]]
+			char3d.region_enabled=true;
+			
+			char3d.region_rect= Rect2((text.unicode_at(i)-32)*64, 0,64,64);
 			char3d.position.x = (i-newline - 0.5*line_len)   * char_size *0.5 
 			char3d.position.y = char_size * 0.6 * -lines;
 			char3d.scale= Vector3(0,0,0)
