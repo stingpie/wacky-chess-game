@@ -53,9 +53,9 @@ func _ready():
 	var arr=[	[11,12,10,13,14,10,12,11], 
 				[9,9,9,9,9,9,9,9],
 				[0,0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0,0],
-				[0,0,0,0,1,9,0,0],
-				[0,0,0,4,0,0,9,0],  
+				[0,3,0,0,0,0,0,0],
+				[0,0,0,2,0,0,0,0],
+				[0,0,0,0,0,5,0,0],  
 				[1,1,1,1,1,1,1,1], 
 				[3,4,2,6,5,2,4,3]];
 	
@@ -81,19 +81,59 @@ func set_pieces(setup):
 
 func highlight_piece(piece):
 	if(piece.piece==1): # W PAWN
-		if(tiles[piece.x][piece.y-1].piece>=8 or tiles[piece.x][piece.y-1].piece==0):
-			tiles[piece.x][piece.y-1].highlight.show();
-			if(piece.y==6): # if passant is possible
-				tiles[piece.x][piece.y-2].highlight.show();
+		if(piece.y==6): # if passant is possible
+			highlight_line(piece, 0,-1, 2);
+		else:
+			highlight_line(piece, 0,-1, 1);
 	
-	
-	
-	
-	
+	if(piece.piece == 2 or piece.piece == 10):
+		highlight_line(piece, -1,-1, 8);
+		highlight_line(piece, -1, 1, 8);
+		highlight_line(piece,  1,-1, 8);
+		highlight_line(piece,  1, 1, 8);
+		
+	if(piece.piece == 3 or piece.piece == 11):
+		highlight_line(piece,  0,-1, 8);
+		highlight_line(piece,  0, 1, 8);
+		highlight_line(piece, -1, 0, 8);
+		highlight_line(piece,  1, 0, 8);
+		
+	if(piece.piece == 4 or piece.piece == 12):
+		highlight_line(piece, -1,-2, 1);
+		highlight_line(piece, -2,-1, 1);
+		highlight_line(piece,  1,-2, 1);
+		highlight_line(piece,  2,-1, 1);
+		highlight_line(piece,  1, 2, 1);
+		highlight_line(piece,  2, 1, 1);
+		highlight_line(piece, -1, 2, 1);
+		highlight_line(piece, -2, 1, 1);
+		
+		
+	if(piece.piece == 5 or piece.piece == 13):
+		highlight_line(piece, -1,-1, 8);
+		highlight_line(piece, -1, 1, 8);
+		highlight_line(piece,  1,-1, 8);
+		highlight_line(piece,  1, 1, 8);
+		highlight_line(piece,  0,-1, 8);
+		highlight_line(piece,  0, 1, 8);
+		highlight_line(piece, -1, 0, 8);
+		highlight_line(piece,  1, 0, 8);
+		
+	if(piece.piece == 6 or piece.piece == 14):
+		highlight_line(piece, -1,-1, 1);
+		highlight_line(piece, -1, 1, 1);
+		highlight_line(piece,  1,-1, 1);
+		highlight_line(piece,  1, 1, 1);
+		highlight_line(piece,  0,-1, 1);
+		highlight_line(piece,  0, 1, 1);
+		highlight_line(piece, -1, 0, 1);
+		highlight_line(piece,  1, 0, 1);
+
 	if(piece.piece==9): # B PAWN
-		tiles[piece.x][piece.y+1].highlight.show();
 		if(piece.y==1): # if passant is possible
-			tiles[piece.x][piece.y+2].highlight.show();
+			highlight_line(piece, 0,1, 2);
+		else:
+			highlight_line(piece, 0,1, 1);
 
 
 
@@ -102,18 +142,60 @@ func highlight_piece(piece):
 
 func unhighlight_piece(piece):
 	if(piece.piece==1): # W PAWN
-		tiles[piece.x][piece.y-1].highlight.hide();
 		if(piece.y==6): # if passant is possible
-			tiles[piece.x][piece.y-2].highlight.hide();
+			unhighlight_line(piece, 0,-1, 2);
+		else:
+			unhighlight_line(piece, 0,-1, 1);
 	
-	
-	
-	
-	
+	if(piece.piece == 2 or piece.piece == 10):
+		unhighlight_line(piece, -1,-1, 8);
+		unhighlight_line(piece, -1, 1, 8);
+		unhighlight_line(piece,  1,-1, 8);
+		unhighlight_line(piece,  1, 1, 8);
+		
+	if(piece.piece == 3 or piece.piece == 11):
+		unhighlight_line(piece,  0,-1, 8);
+		unhighlight_line(piece,  0, 1, 8);
+		unhighlight_line(piece, -1, 0, 8);
+		unhighlight_line(piece,  1, 0, 8);
+		
+	if(piece.piece == 4 or piece.piece == 12):
+		unhighlight_line(piece, -1,-2, 1);
+		unhighlight_line(piece, -2,-1, 1);
+		unhighlight_line(piece,  1,-2, 1);
+		unhighlight_line(piece,  2,-1, 1);
+		unhighlight_line(piece,  1, 2, 1);
+		unhighlight_line(piece,  2, 1, 1);
+		unhighlight_line(piece, -1, 2, 1);
+		unhighlight_line(piece, -2, 1, 1);
+		
+		
+	if(piece.piece == 5 or piece.piece == 13):
+		unhighlight_line(piece, -1,-1, 8);
+		unhighlight_line(piece, -1, 1, 8);
+		unhighlight_line(piece,  1,-1, 8);
+		unhighlight_line(piece,  1, 1, 8);
+		unhighlight_line(piece,  0,-1, 8);
+		unhighlight_line(piece,  0, 1, 8);
+		unhighlight_line(piece, -1, 0, 8);
+		unhighlight_line(piece,  1, 0, 8);
+		
+	if(piece.piece == 6 or piece.piece == 14):
+		unhighlight_line(piece, -1,-1, 1);
+		unhighlight_line(piece, -1, 1, 1);
+		unhighlight_line(piece,  1,-1, 1);
+		unhighlight_line(piece,  1, 1, 1);
+		unhighlight_line(piece,  0,-1, 1);
+		unhighlight_line(piece,  0, 1, 1);
+		unhighlight_line(piece, -1, 0, 1);
+		unhighlight_line(piece,  1, 0, 1);
+
 	if(piece.piece==9): # B PAWN
-		tiles[piece.x][piece.y+1].highlight.hide();
 		if(piece.y==1): # if passant is possible
-			tiles[piece.x][piece.y+2].highlight.hide();
+			unhighlight_line(piece, 0,1, 2);
+		else:
+			unhighlight_line(piece, 0,1, 1);
+	pass;
 	
 
 
@@ -135,4 +217,60 @@ func load_textures(char):
 	var texture = ImageTexture.create_from_image(image)
 	piecetex.append(texture)
 
-
+func highlight_line(piece, dx, dy, length):
+	var px = piece.x;
+	var py = piece.y;
+	var type = piece.piece;
+	
+	
+	for i in range(1,length+1):
+		if(px+dx*i>7 or px+dx*i<0 or py+dy*i>7 or py+dy*i<0):
+			return; 
+			
+		if(type>=8):
+			if(tiles[px+dx*i][py+dy*i].piece>8):
+				return;
+			elif(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece!=0):
+				tiles[px+dx*i][py+dy*i].highlight.show();
+				return;
+			else:
+				tiles[px+dx*i][py+dy*i].highlight.show();
+				
+		if(type<8):
+			if(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece>0):
+				return;
+			elif(tiles[px+dx*i][py+dy*i].piece>8 && tiles[px+dx*i][py+dy*i].piece!=0):
+				tiles[px+dx*i][py+dy*i].highlight.show();
+				return;
+			else:
+				tiles[px+dx*i][py+dy*i].highlight.show();
+	pass
+	
+func unhighlight_line(piece, dx, dy, length):
+	
+	var px = piece.x;
+	var py = piece.y;
+	var type = piece.piece;
+	
+	for i in range(1,length+1):
+		if(px+dx*i>7 or px+dx*i<0 or py+dy*i>7 or py+dy*i<0):
+			return; 
+			
+		if(type>=8):
+			if(tiles[px+dx*i][py+dy*i].piece>8):
+				return;
+			elif(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece!=0):
+				tiles[px+dx*i][py+dy*i].highlight.hide();
+				return;
+			else:
+				tiles[px+dx*i][py+dy*i].highlight.hide();
+				
+		if(type<8):
+			if(tiles[px+dx*i][py+dy*i].piece<8 && tiles[px+dx*i][py+dy*i].piece>0):
+				return;
+			elif(tiles[px+dx*i][py+dy*i].piece>8 && tiles[px+dx*i][py+dy*i].piece!=0):
+				tiles[px+dx*i][py+dy*i].highlight.hide();
+				return;
+			else:
+				tiles[px+dx*i][py+dy*i].highlight.hide();
+	pass
