@@ -28,7 +28,7 @@ var font
 func _ready():
 	#mousebox = self.get_child(0).get_child(0)
 	mousebox = get_child(0)
-	font = load("res://sprites/text2/ResizedSheet1.png")
+	font = load("res://sprites/text2/GabeFontSheet1.png")
 	
 	for i in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
 		load_textures(i)
@@ -174,8 +174,8 @@ func new_line(text):
 			char3d.texture = font #texdict[text[i]]
 			char3d.region_enabled=true;
 			
-			char3d.region_rect= Rect2((text.unicode_at(i)-32)*64, 0,64,64);
-			char3d.position.x = (i-newline - 0.5*line_len)   * char_size *0.5 
+			char3d.region_rect= Rect2((text.unicode_at(i)-32)*64+0.5, 0.5,63,63);
+			char3d.position.x = (i-newline - 0.5*line_len)   * char_size *0.55 
 			char3d.position.y = char_size * 0.6 * -lines;
 			char3d.scale= Vector3(0,0,0)
 			chars.append(char3d)
