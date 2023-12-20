@@ -3,6 +3,9 @@ extends Node3D
 # This controls the chess board. it copys a new tile for each square, and (in future) will do all 
 # the actual chess logic. 
 
+var hover_sound = preload("res://Gangsta Paradise Choir  Sound Effect for editinghgc.mp3");
+var audio_stream_player = AudioStreamPlayer.new();
+
 var mouse_over=false;
 var tiles=[];
 var selected_piece=null;
@@ -29,6 +32,10 @@ var piece_held=null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	audio_stream_player.stream = hover_sound;
+	audio_stream_player.name = "sound_effect"
+	self.add_child(audio_stream_player);
 	
 	for i in "APBRNQKAAPBRNQK":
 		load_textures(i)
@@ -71,6 +78,7 @@ func _process(delta):
 	
 	if(selected_piece):
 		selected_piece.cursor_hover(delta)
+		get_node("sound_effect").play();
 	pass
 
 func _input(event):
